@@ -11,7 +11,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SanoCenterGold</a>
+                <a class="navbar-brand mr-auto" href="#">
+                    <img src="~/img/logo-para-puerta-de-arriba.png" width="360" height="80" class="d-inline-block align-top" alt="Logo" />
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,8 +22,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>                       
+                        </li>
                         @*@if (User.IsInRole("entrenador"))*@
                         @*{*@
                         <li class="nav-item">
@@ -31,6 +36,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Retos" asp-action="Index">Retos</a>
                         </li>
+
+
+
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+                                Administrador
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Ejercicios" asp-action="Index">Administrar Ejercicios</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Retos" asp-action="Index">Administrar Retos</a></li>
+                                <li><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrar entrenador</a></li>
+
+                            </ul>
+                        </div>
 
                     </ul>
                 </div>

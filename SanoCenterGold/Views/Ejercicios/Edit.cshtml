@@ -1,4 +1,5 @@
-﻿@model SanoCenterGold.Models.Ejercicio
+﻿@using SanoCenterGold.Enum;
+@model SanoCenterGold.Models.Ejercicio
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,7 +21,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Dificultad" class="control-label"></label>
-                <select asp-for="Dificultad" class="form-control"></select>
+                <select asp-for="Dificultad" class="form-control" asp-items="@Html.GetEnumSelectList<DificultadEnum>()"></select>
+                @*<select asp-for="Dificultad" class="form-control"></select>*@
                 <span asp-validation-for="Dificultad" class="text-danger"></span>
             </div>
             <div class="form-group">

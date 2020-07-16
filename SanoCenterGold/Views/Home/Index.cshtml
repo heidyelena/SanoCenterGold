@@ -10,7 +10,7 @@
 </div>
 
 @if ((ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>) != null &&
-    (ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+   (ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>).Count > 0)
 {
     <h2>MIS DISPONIBLES</h2>
 
@@ -37,7 +37,7 @@
 
 
 @if ((ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>) != null &&
-    (ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+   (ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>).Count > 0)
 {
     <h2>RETOS DISPONIBLES</h2>
 
@@ -45,6 +45,7 @@
     {
         <div class="jumbotron-fluid col-lg-12">
             <p class="p-3">@reto.Nombre</p>
+            <img src="@reto.Imagen" alt="Alternate Text" />
             <ul>
                 @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
                 {
@@ -56,6 +57,11 @@
 
             </ul>
             <button class="btn-primary float-right">APUNTARSE</button>
+            <td>
+                <a asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
+            </td>
         </div>
     }
 }
