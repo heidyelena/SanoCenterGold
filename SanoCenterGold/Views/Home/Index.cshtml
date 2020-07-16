@@ -1,0 +1,63 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">BIENVENIDO A SANO CENTER</h1>
+    <p>Cualquier cosa que sea de ellos, no?</p>
+</div>
+
+@if ((ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>) != null &&
+    (ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+{
+    <h2>MIS DISPONIBLES</h2>
+
+    @foreach (var reto in ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>)
+    {
+        <div class="jumbotron-fluid col-lg-12">
+            <p class="p-3">@reto.Nombre</p>
+            <ul>
+                @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
+                {
+
+                    <li>
+                        @ejercicio.Nombre: @ejercicio.Series series de @ejercicio.Repeticiones repeticiones
+                    </li>
+                }
+
+            </ul>
+            <button class="btn-primary float-right">COMENZAR</button>
+            <button class="btn-danger float-right">ABANDONAR</button>
+        </div>
+    }
+}
+
+
+
+@if ((ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>) != null &&
+    (ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+{
+    <h2>RETOS DISPONIBLES</h2>
+
+    @foreach (var reto in ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>)
+    {
+        <div class="jumbotron-fluid col-lg-12">
+            <p class="p-3">@reto.Nombre</p>
+            <ul>
+                @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
+                {
+
+                    <li>
+                        @ejercicio.Nombre: @ejercicio.Series series de @ejercicio.Repeticiones repeticiones
+                    </li>
+                }
+
+            </ul>
+            <button class="btn-primary float-right">APUNTARSE</button>
+        </div>
+    }
+}
+
+

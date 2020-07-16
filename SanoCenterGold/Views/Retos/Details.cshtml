@@ -1,0 +1,74 @@
+﻿@model SanoCenterGold.Models.Reto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Reto</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Imagen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaLimite)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaLimite)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdEntrenador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdEntrenador)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ejercicios)
+        </dt>
+        <dd class="col-sm-10">
+
+            <table>
+                <trow>
+                    <thead>Ejercicio</thead>
+                    <thead>Series</thead>
+                    <thead>Repeticiones</thead>
+                </trow>
+                @foreach (var item in Model.Ejercicios.Select(x => x.Ejercicio))
+                {
+
+                    <tr>
+                        <td>
+                            @item.Nombre
+                        </td>
+                        <td>
+                            @item.Series
+                        </td>
+                        <td>
+                            @item.Repeticiones
+                        </td>
+                    </tr>
+
+                }
+            </table>
+
+            @*@Html.DisplayFor(model => model.Ejercicios.Select(x => x.Ejercicio.Nombre).FirstOrDefault())*@
+
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Volver</a>
+</div>

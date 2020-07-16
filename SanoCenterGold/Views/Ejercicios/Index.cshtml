@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SanoCenterGold.Models.Ejercicio>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Ejercicio</h1>
+
+<p>
+    <a asp-action="Create">Crear Ejercicio</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dificultad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Repeticiones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Series)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dificultad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Repeticiones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Series)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
