@@ -65,6 +65,10 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group" hidden>
+                <label asp-for="Input.IdUsuario"></label>
+                <input asp-for="Input.IdUsuario" value="@ViewData["MaxId"]" class="form-control" />
+            </div>
             @{
                 if (User.IsInRole("admin"))
                 {
