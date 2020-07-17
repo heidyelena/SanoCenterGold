@@ -97,6 +97,7 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            public bool Entrenador { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -126,6 +127,10 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (Input.Entrenador)
+                    {
+                       await _userManager.AddToRoleAsync(user, "Entrenador");
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

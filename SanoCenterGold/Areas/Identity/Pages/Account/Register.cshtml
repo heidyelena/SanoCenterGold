@@ -1,4 +1,7 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
 @model RegisterModel
 @{
     ViewData["Title"] = "Registrarse";
@@ -62,6 +65,17 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            @{
+                if (User.IsInRole("admin"))
+                {
+                    <div class="form-group">
+                        <label asp-for="Input.Entrenador"></label>
+                        <input asp-for="Input.Entrenador" class="form-control" />
+                        <span asp-validation-for="Input.Entrenador" class="text-danger"></span>
+                    </div>
+                }
+            }
+
             <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
     </div>
@@ -73,11 +87,11 @@
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     @*<div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>*@
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>*@
                 }
                 else
                 {

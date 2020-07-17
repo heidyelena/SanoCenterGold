@@ -11,8 +11,7 @@ namespace SanoCenterGold.Data.Migrations
                 table: "AspNetUsers",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "int")
-                .Annotation("SqlServer:Identity", "1, 1");
+                oldType: "int");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -22,8 +21,7 @@ namespace SanoCenterGold.Data.Migrations
                 table: "AspNetUsers",
                 type: "int",
                 nullable: false,
-                oldClrType: typeof(int))
-                .OldAnnotation("SqlServer:Identity", "1, 1");
+                oldClrType: typeof(int));
         }
     }
 }

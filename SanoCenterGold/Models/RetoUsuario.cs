@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SanoCenterGold.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace SanoCenterGold.Models
         public Usuario Usuario { get; set; }
 
         public DateTime? FechaCompletado { get; set; }
+
+        public EstadoRetoEnum EstadoDelReto { get; set; }
     }
 }

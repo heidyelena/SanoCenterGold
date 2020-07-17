@@ -266,6 +266,9 @@ namespace SanoCenterGold.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("EstadoDelReto")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("FechaCompletado")
                         .HasColumnType("datetime2");
 
