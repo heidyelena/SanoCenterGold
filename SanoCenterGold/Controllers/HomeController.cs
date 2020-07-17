@@ -37,30 +37,104 @@ namespace SanoCenterGold.Controllers
             //    .ToList();
 
 
-            // 1. CSS de la pagina principal, bonito y cuqui para cada tarea
-            // 2. Encontrar la forma de acceder al campo UsuarioId en los dos
-            // ViewData que hay aquí abajo
-            // 3. Almacenar la IdUsuario correctamente *
-            // 4. Crear una pagina para el administrador donde poder cambiar los roles de los usuarios
+            if (usuario != null)
+            {
+                ViewData["RetosDeUsuario"] = _context.Reto
+                    .Include(r => r.Usuarios)
+                    .Include(r => r.Ejercicios)
+                    .ThenInclude(r => r.Ejercicio)
+                    .Where(r => r.Usuarios.Any(u => u.IdUsuario == usuario.IdUsuario
+                        && (u.EstadoDelReto == Enum.EstadoRetoEnum.Apuntado
+                        || u.EstadoDelReto == Enum.EstadoRetoEnum.Iniciado)))
+                    .ToList();
 
-
-
-            ViewData["RetosDeUsuario"] = _context.Reto
-                .Include(r => r.Usuarios)
-                .Include(r => r.Ejercicios)
-                .ThenInclude(r => r.Ejercicio)
-                .Where(r => r.Usuarios.Any(u => u.IdUsuario == 1))
-                .ToList();
-
-            ViewData["RetosGeneral"] = _context.Reto
-                .Include(r => r.Ejercicios)
-                .ThenInclude(r => r.Ejercicio)
-                .Where(r => r.Usuarios.All(u => u.IdUsuario != 1))
-                .ToList();
+                ViewData["RetosGeneral"] = _context.Reto
+                    .Include(r => r.Ejercicios)
+                    .ThenInclude(r => r.Ejercicio)
+                    .Where(r => r.Usuarios.All(u => u.IdUsuario == usuario.IdUsuario
+                        && (u.EstadoDelReto == Enum.EstadoRetoEnum.SinApuntar
+                        || u.EstadoDelReto == Enum.EstadoRetoEnum.Abandonado)))
+                    .ToList();
+            }
 
 
             return View();
         }
+
+        public async Task<IActionResult> Apuntarse(int idReto)
+        {
+            Usuario usuario = await _userManager.GetUserAsync(User);
+            var retoBuscado = _context.Reto.Where(x => x.Id == idReto).Include(x => x.Usuarios).FirstOrDefault();
+            var retoApuntado = retoBuscado.Usuarios.Where(u => u.IdUsuario == usuario.IdUsuario).FirstOrDefault();
+
+            if (retoApuntado == null)
+            {
+                RetoUsuario reto = new RetoUsuario();
+                reto.IdReto = idReto;
+                reto.IdUsuario = usuario.IdUsuario;
+                reto.Reto = _context.Reto.Where(r => r.Id == idReto).FirstOrDefault();
+                reto.Usuario = usuario;
+                reto.EstadoDelReto = Enum.EstadoRetoEnum.Apuntado;
+                _context.Add(reto);
+            }
+            else
+            {
+                retoApuntado.EstadoDelReto = Enum.EstadoRetoEnum.Apuntado;
+                _context.Update(retoApuntado);
+            }
+
+
+
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Abandonar(int idReto)
+        {
+            Usuario usuario = await _userManager.GetUserAsync(User);
+
+            var reto = _context.Reto.Where(x => x.Id == idReto).Include(x => x.Usuarios).FirstOrDefault();
+            var retoAbandonado = reto.Usuarios.Where(u => u.IdUsuario == usuario.IdUsuario).FirstOrDefault();
+            retoAbandonado.EstadoDelReto = Enum.EstadoRetoEnum.Abandonado;
+
+            _context.Update(retoAbandonado);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> IniciarReto(int idReto)
+        {
+            Usuario usuario = await _userManager.GetUserAsync(User);
+            var retoBuscado = _context.Reto.Where(x => x.Id == idReto).Include(x => x.Usuarios).FirstOrDefault();
+            var retoApuntado = retoBuscado.Usuarios.Where(u => u.IdUsuario == usuario.IdUsuario).FirstOrDefault();
+
+
+            retoApuntado.EstadoDelReto = Enum.EstadoRetoEnum.Iniciado;
+            _context.Update(retoApuntado);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> FinalizarReto(int idReto)
+        {
+            Usuario usuario = await _userManager.GetUserAsync(User);
+            var retoBuscado = _context.Reto.Where(x => x.Id == idReto).Include(x => x.Usuarios).FirstOrDefault();
+            var retoApuntado = retoBuscado.Usuarios.Where(u => u.IdUsuario == usuario.IdUsuario).FirstOrDefault();
+
+            retoApuntado.FechaCompletado = DateTime.Now;
+            retoApuntado.EstadoDelReto = Enum.EstadoRetoEnum.Finalizado;
+            _context.Update(retoApuntado);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public IActionResult Privacy()
         {

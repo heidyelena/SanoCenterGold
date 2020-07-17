@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SanoCenterGold.Models.RetoUsuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdReto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCompletado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoDelReto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdReto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUsuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCompletado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoDelReto)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdRetoUsuario">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdRetoUsuario">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdRetoUsuario">Delete</a>
+                        <a asp-action="Valoracion" asp-route-id="@item.IdRetoUsuario">Valorar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

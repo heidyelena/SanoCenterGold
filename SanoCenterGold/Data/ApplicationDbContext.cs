@@ -16,5 +16,6 @@ namespace SanoCenterGold.Data
         }
         public DbSet<SanoCenterGold.Models.Ejercicio> Ejercicio { get; set; }
         public DbSet<SanoCenterGold.Models.Reto> Reto { get; set; }
+        public DbSet<SanoCenterGold.Models.RetoUsuario> RetoUsuario { get; set; }
     }
 }

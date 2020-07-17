@@ -12,7 +12,7 @@ namespace SanoCenterGold.Models
         public string Comentario { get; set; }
         public int IdReto { get; set; }
         public Reto Reto { get; set; }
-        public int IdUsuario { get; set; }
+        public int IdUsuario { get; set; } // igual aqui no se guarda el id del usurio porque este nombre es del atributo que se agrago al modelo de usuario.
         public Usuario Usuario { get; set; }
     }
 }
