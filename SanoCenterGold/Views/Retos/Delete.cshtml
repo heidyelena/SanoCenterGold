@@ -32,8 +32,8 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdEntrenador)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdEntrenador)
+        <dd class="col-sm-10">
+            @String.Concat(Model.Entrenador.Nombre, " ", Model.Entrenador.Apellidos)
         </dd>
     </dl>
     

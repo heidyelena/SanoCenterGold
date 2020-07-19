@@ -1,0 +1,65 @@
+﻿@model SanoCenterGold.Models.Valoracion
+
+    
+
+    <div class="container">
+        <form asp-action="GuardarValoracion">
+            <h5>TEXTO EN PLAN COMO VALORARÍAS EL RETO? BLABLABLA</h5>
+            <span id="stars1" class="fa fa-star"></span>
+            <span id="stars2" class="fa fa-star"></span>
+            <span id="stars3" class="fa fa-star"></span>
+            <span id="stars4" class="fa fa-star"></span>
+            <span id="stars5" class="fa fa-star"></span>
+            <div class="form-group">
+                <input id="puntuacion" asp-for="Puntuacion" class="form-control" value="0" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="IdReto" class="form-control" value="@Model.IdReto" hidden />
+            </div>
+
+            <input type="submit" value="Crear" class="btn btn-primary" />
+        </form>
+    </div>
+
+    <script>
+        $("#stars1").on("click", function () {
+            $("#stars1").addClass("checked");
+            $("#stars2").removeClass("checked");
+            $("#stars3").removeClass("checked");
+            $("#stars4").removeClass("checked");
+            $("#stars5").removeClass("checked");
+            $("#puntuacion").val(1);
+        })
+        $("#stars2").on("click", function () {
+            $("#stars1").addClass("checked");
+            $("#stars2").addClass("checked");
+            $("#stars3").removeClass("checked");
+            $("#stars4").removeClass("checked");
+            $("#stars5").removeClass("checked");
+            $("#puntuacion").val(2);
+        })
+        $("#stars3").on("click", function () {
+            $("#stars1").addClass("checked");
+            $("#stars2").addClass("checked");
+            $("#stars3").addClass("checked");
+            $("#stars4").removeClass("checked");
+            $("#stars5").removeClass("checked");
+            $("#puntuacion").val(3);
+        })
+        $("#stars4").on("click", function () {
+            $("#stars1").addClass("checked");
+            $("#stars2").addClass("checked");
+            $("#stars3").addClass("checked");
+            $("#stars4").addClass("checked");
+            $("#stars5").removeClass("checked");
+            $("#puntuacion").val(4);
+        })
+        $("#stars5").on("click", function () {
+            $("#stars1").addClass("checked");
+            $("#stars2").addClass("checked");
+            $("#stars3").addClass("checked");
+            $("#stars4").addClass("checked");
+            $("#stars5").addClass("checked");
+            $("#puntuacion").val(5);
+        })
+    </script>

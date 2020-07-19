@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SanoCenterGold.Models.Usuario>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    Puesto
+                </td>
+                <td>
+                    Usuario
+                </td>
+                <td>
+                    Retos Completados
+                </td>
+                <td>
+                    Centro
+                </td>
+                <td>
+                    Localidad
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var posicion = 1;
+            }
+            @foreach (var user in Model.OrderByDescending(m => m.RetosCompletados))
+            {
+
+
+                <tr>
+                    <td>@posicion</td>
+                    <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
+                    <td>@user.RetosCompletados</td>
+                    <td>
+                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                        .Where(x => x.Id == user.IdGimnasio)
+                        .Select(x => x.Nombre)
+                        .FirstOrDefault())
+                    </td>
+                    <td>
+                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                            .Where(x => x.Id == user.IdGimnasio)
+                            .Select(x => x.Localidad)
+                            .FirstOrDefault())
+                    </td>
+                </tr>
+                posicion = posicion + 1;
+
+            }
+        </tbody>
+    </table>
+}
+

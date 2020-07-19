@@ -522,7 +522,7 @@ namespace SanoCenterGold.Data.Migrations
             modelBuilder.Entity("SanoCenterGold.Models.Valoracion", b =>
                 {
                     b.HasOne("SanoCenterGold.Models.Reto", "Reto")
-                        .WithMany()
+                        .WithMany("Valoraciones")
                         .HasForeignKey("RetoId");
 
                     b.HasOne("SanoCenterGold.Models.Usuario", "Usuario")

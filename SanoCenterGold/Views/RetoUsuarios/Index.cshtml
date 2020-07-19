@@ -13,43 +13,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdReto)
+                Reto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCompletado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoDelReto)
+                Fecha finalización
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Count() > 0)
+        @if (Model != null && Model.Count() > 0)
         {
             @foreach (var item in Model)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IdReto)
+                        @Html.DisplayFor(modelItem => item.Reto.Nombre)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdUsuario)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaCompletado)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EstadoDelReto)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.IdRetoUsuario">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.IdRetoUsuario">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.IdRetoUsuario">Delete</a>
-                        <a asp-action="Valoracion" asp-route-id="@item.IdRetoUsuario">Valorar</a>
+
+                        @if ((ViewData["Valoraciones"] as List<SanoCenterGold.Models.Valoracion>).Where(v => v.IdReto == item.Reto.Id).Count() < 1)
+                        {
+                            <a asp-action="Valoracion" asp-controller="RetoUsuarios" asp-route-id="@item.IdReto">Valorar</a>
+                        }
+                        else
+                        {
+                            <p>Reto ya valorado</p>
+                        }
                     </td>
                 </tr>
             }

@@ -20,5 +20,7 @@ namespace SanoCenterGold.Models
         [Display(Name = "Entrenador")]
         public int IdEntrenador { get; set; }
         public Usuario Entrenador { get; set; }
+
+        public List<Valoracion> Valoraciones { get; set; }
     }
 }

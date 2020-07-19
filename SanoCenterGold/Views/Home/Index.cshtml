@@ -56,8 +56,21 @@
     @foreach (var reto in ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>)
     {
         <div class="jumbotron-fluid col-lg-12">
+            <img src="~/img/@reto.Imagen" alt="Alternate Text" />
             <p class="p-3">@reto.Nombre</p>
-            <img src="@reto.Imagen" alt="Alternate Text" />
+            @if ((ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).Count() > 0)
+            {
+                var valoracion = (ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).FirstOrDefault();
+                
+                <p>
+                    @valoracion.Value
+                    <span class="fa fa-star checked"></span>
+                </p>
+            }
+            else
+            {
+                @:<p>Aun no hay valoraciones para este reto</p>
+            }
             <ul>
                 @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
                 {
@@ -69,10 +82,11 @@
 
             </ul>
             <button class="btn-primary float-right" id="@String.Concat("apuntarse", @reto.Id)" onclick="location.href='@Url.Action("Apuntarse", "Home", new { idReto = reto.Id })'">APUNTARSE</button>
+
             <td>
-                <a asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
+                <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
+                <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
+                <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
             </td>
         </div>
     }

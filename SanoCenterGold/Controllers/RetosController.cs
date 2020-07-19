@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +15,18 @@ namespace SanoCenterGold.Controllers
     public class RetosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<Usuario> _userManager;
 
-        public RetosController(ApplicationDbContext context)
+        public RetosController(ApplicationDbContext context, UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Retos
         public async Task<IActionResult> Index()
         {            
-            return View(await _context.Reto.ToListAsync());
+            return View(await _context.Reto.Include(r => r.Entrenador).ToListAsync());
         }
 
         // GET: Retos/Details/5
@@ -35,7 +39,8 @@ namespace SanoCenterGold.Controllers
 
             var reto = await _context.Reto
                 .Include(r => r.Ejercicios)
-                .ThenInclude(r => r.Ejercicio)
+                    .ThenInclude(r => r.Ejercicio)
+                .Include(r => r.Entrenador)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (reto == null)
@@ -60,6 +65,8 @@ namespace SanoCenterGold.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Imagen,FechaLimite,IdEntrenador")] Reto reto, string[] ejercicios)
         {
+            var currentUser = await _userManager.FindByEmailAsync(User.Identity.Name);
+
             if (ModelState.IsValid)
             {
                 List<RetoEjercicio> ejerciciosLista = new List<RetoEjercicio>();
@@ -73,6 +80,8 @@ namespace SanoCenterGold.Controllers
                 }
 
                 reto.Ejercicios = ejerciciosLista;
+                reto.Entrenador = currentUser;
+                reto.IdEntrenador = currentUser.IdUsuario;
 
                 _context.Add(reto);
                 await _context.SaveChangesAsync();
@@ -141,6 +150,7 @@ namespace SanoCenterGold.Controllers
             }
 
             var reto = await _context.Reto
+                .Include(r => r.Entrenador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reto == null)
             {
@@ -155,7 +165,19 @@ namespace SanoCenterGold.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reto = await _context.Reto.FindAsync(id);
+            var reto = await _context.Reto
+                .FindAsync(id);
+
+            var usuariosReto = _context.RetoUsuario.Where(r => r.IdReto == reto.Id);
+            var ejerciciosReto = _context.RetoEjercicio.Include(r => r.Reto).Where(r => r.Reto.Id == reto.Id);
+
+            // borramos la relacion entre los usuarios y este reto
+            _context.RetoUsuario.RemoveRange(usuariosReto);
+
+            // borramos la relacion entre los ejercicios y este reto
+            _context.RetoEjercicio.RemoveRange(ejerciciosReto);
+            _context.SaveChanges();
+
             _context.Reto.Remove(reto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

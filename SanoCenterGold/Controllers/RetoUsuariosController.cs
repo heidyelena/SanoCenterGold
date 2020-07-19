@@ -24,14 +24,16 @@ namespace SanoCenterGold.Controllers
         }
 
         // GET: RetoUsuarios
-        [Authorize(Roles = "usuario, admin, entrenador")]
+        //[Authorize(Roles = "usuario, admin, entrenador")]
         public async Task<IActionResult> Index()
         {
             Usuario usuario = await _userManager.GetUserAsync(User);
 
             if (usuario != null)
             {
-                return View(await _context.RetoUsuario
+                ViewData["Valoraciones"] = _context.Valoracion.Where(v => v.IdUsuario == usuario.IdUsuario).ToList();
+
+                return View(await _context.RetoUsuario.Include(r => r.Reto).ThenInclude(r => r.Valoraciones)
                     .Where(r => r.EstadoDelReto == Enum.EstadoRetoEnum.Finalizado
                     && r.IdUsuario == usuario.IdUsuario).ToListAsync());
             }
@@ -48,7 +50,11 @@ namespace SanoCenterGold.Controllers
             }
 
             var retoUsuario = await _context.RetoUsuario
+                .Include(r => r.Usuario)
+                .Include(r => r.Reto)
+                .ThenInclude(r => r.Entrenador)
                 .FirstOrDefaultAsync(m => m.IdRetoUsuario == id);
+
             if (retoUsuario == null)
             {
                 return NotFound();
@@ -148,19 +154,24 @@ namespace SanoCenterGold.Controllers
             return View(retoUsuario);
         }
 
-        public async Task<IActionResult> Valorar(int? id)
+        public async Task<IActionResult> Valoracion(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var valoracion = new Valoracion();
+            valoracion.IdReto = id;
+            return View(valoracion);
+        }
 
-            var retoUsuario = await _context.RetoUsuario.FindAsync(id);
-            if (retoUsuario == null)
-            {
-                return NotFound();
-            }
-            return View(retoUsuario);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GuardarValoracion([Bind("IdReto,Puntuacion")] Valoracion valoracion)
+        {
+            Usuario usuario = await _userManager.GetUserAsync(User);
+            valoracion.IdUsuario = usuario.IdUsuario;
+
+            _context.Add(valoracion);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: RetoUsuarios/Delete/5

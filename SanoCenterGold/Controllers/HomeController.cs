@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -31,29 +32,53 @@ namespace SanoCenterGold.Controllers
             Usuario usuarioPorEmail = await _userManager.FindByEmailAsync("email");
             Usuario usuarioPorId = await _userManager.FindByIdAsync("id");
 
-            //ViewData["RetosDeUsuario"] = _context.Reto
-            //    .Include(r => r.Ejercicios)
-            //    .ThenInclude(r => r.Ejercicio)
-            //    .ToList();
-
-
             if (usuario != null)
             {
                 ViewData["RetosDeUsuario"] = _context.Reto
                     .Include(r => r.Usuarios)
+                    .Include(r => r.Valoraciones)
                     .Include(r => r.Ejercicios)
                     .ThenInclude(r => r.Ejercicio)
                     .Where(r => r.Usuarios.Any(u => u.IdUsuario == usuario.IdUsuario
                         && (u.EstadoDelReto == Enum.EstadoRetoEnum.Apuntado
                         || u.EstadoDelReto == Enum.EstadoRetoEnum.Iniciado)))
+                    .Select(r => new Reto
+                    {
+                        Entrenador = r.Entrenador,
+                        FechaLimite = r.FechaLimite,
+                        Id = r.Id,
+                        IdEntrenador = r.IdEntrenador,
+                        Imagen = r.Imagen,
+                        Nombre = r.Nombre,
+                        Ejercicios = r.Ejercicios,
+                        Usuarios = r.Usuarios.Where(u => u.IdUsuario == usuario.IdUsuario).ToList()
+                    })
                     .ToList();
 
+                var retoValoracion = new List<KeyValuePair<int, float>>();
+                var valoraciones = _context.Valoracion.ToList();
+
+                foreach (var valoracion in valoraciones.GroupBy(v => v.IdReto))
+                {
+                    float media = 0;
+                    foreach (var puntuacion in valoracion)
+                    {
+                        media += puntuacion.Puntuacion;
+                    }
+                    media /= valoracion.Count();
+                    retoValoracion.Add(new KeyValuePair<int, float>(valoracion.Key, media));
+                }
+
+                ViewData["Valoraciones"] = retoValoracion;
+
                 ViewData["RetosGeneral"] = _context.Reto
-                    .Include(r => r.Ejercicios)
+                    .Include(r => r.Valoraciones)
+                    .Include(r => r.Ejercicios)                    
                     .ThenInclude(r => r.Ejercicio)
-                    .Where(r => r.Usuarios.All(u => u.IdUsuario == usuario.IdUsuario
-                        && (u.EstadoDelReto == Enum.EstadoRetoEnum.SinApuntar
-                        || u.EstadoDelReto == Enum.EstadoRetoEnum.Abandonado)))
+                    .Where(r => r.Usuarios.All(u => u.IdUsuario != usuario.IdUsuario) 
+                    || r.Usuarios.Any(u => u.IdUsuario == usuario.IdUsuario && 
+                        (u.EstadoDelReto == Enum.EstadoRetoEnum.Abandonado 
+                            || u.EstadoDelReto == Enum.EstadoRetoEnum.SinApuntar)))
                     .ToList();
             }
 
@@ -128,11 +153,23 @@ namespace SanoCenterGold.Controllers
 
             retoApuntado.FechaCompletado = DateTime.Now;
             retoApuntado.EstadoDelReto = Enum.EstadoRetoEnum.Finalizado;
+            usuario.RetosCompletados = usuario.RetosCompletados + 1;
+
+            _context.Update(usuario);
             _context.Update(retoApuntado);
 
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Ranking()
+        {
+            var usuarios = await _userManager.Users.ToListAsync();
+
+            ViewData["Gimnasios"] = _context.Gimnasio.ToList(); 
+
+            return View(usuarios); ;
         }
 
 

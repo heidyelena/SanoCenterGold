@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SanoCenterGold.Data;
@@ -92,6 +93,10 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Eilge tu Centro Sano")]
+            public int Gimnasio { get; set; }
+
+            [Required]
             //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -114,6 +119,8 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
                 .OrderByDescending(x => x.IdUsuario)
                 .FirstOrDefault().IdUsuario + 1;
 
+            ViewData["Gimnasios"] = new SelectList(_context.Gimnasio, "Id", "Nombre");
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -135,7 +142,8 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
                     Localidad = Input.Localidad,
                     UserName = Input.Email, 
                     Email = Input.Email,
-                    IdUsuario = Input.IdUsuario
+                    IdUsuario = Input.IdUsuario,
+                    IdGimnasio = Input.Gimnasio
                    
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
