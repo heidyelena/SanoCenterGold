@@ -25,6 +25,7 @@ namespace SanoCenterGold.Controllers
 
         // GET: RetoUsuarios
         //[Authorize(Roles = "usuario, admin, entrenador")]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             Usuario usuario = await _userManager.GetUserAsync(User);

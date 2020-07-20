@@ -9,6 +9,9 @@ html{
 
     background: #343333;
 }*/
+.clearfix{
+    clear:both;
+}
 
 
 a.navbar-brand {

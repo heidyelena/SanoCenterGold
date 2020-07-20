@@ -61,7 +61,7 @@
             @if ((ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).Count() > 0)
             {
                 var valoracion = (ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).FirstOrDefault();
-                
+
                 <p>
                     @valoracion.Value
                     <span class="fa fa-star checked"></span>
@@ -81,13 +81,16 @@
                 }
 
             </ul>
-            <button class="btn-primary float-right" id="@String.Concat("apuntarse", @reto.Id)" onclick="location.href='@Url.Action("Apuntarse", "Home", new { idReto = reto.Id })'">APUNTARSE</button>
+            <div class="clearfix">
 
-            <td>
+                <button class="btn-primary float-right" id="@String.Concat("apuntarse", @reto.Id)" onclick="location.href='@Url.Action("Apuntarse", "Home", new { idReto = reto.Id })'">APUNTARSE</button>
+            </div>
+
+            @*<td>
                 <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
                 <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
                 <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
-            </td>
+            </td>*@
         </div>
     }
 }
