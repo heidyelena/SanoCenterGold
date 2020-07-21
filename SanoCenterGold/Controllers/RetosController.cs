@@ -26,7 +26,10 @@ namespace SanoCenterGold.Controllers
         // GET: Retos
         public async Task<IActionResult> Index()
         {            
-            return View(await _context.Reto.Include(r => r.Entrenador).ToListAsync());
+            var entrenador = await _userManager.GetUserAsync(User);
+            return View(await _context.Reto
+                .Where(r => r.IdEntrenador == entrenador.IdUsuario)
+                .Include(r => r.Entrenador).ToListAsync());
         }
 
         // GET: Retos/Details/5
@@ -41,7 +44,11 @@ namespace SanoCenterGold.Controllers
                 .Include(r => r.Ejercicios)
                     .ThenInclude(r => r.Ejercicio)
                 .Include(r => r.Entrenador)
+                .Include(r => r.Usuarios)
+                    .ThenInclude(r => r.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["Valoraciones"] = _context.Valoracion.ToList();
 
             if (reto == null)
             {

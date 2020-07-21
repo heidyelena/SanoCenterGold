@@ -173,6 +173,25 @@ namespace SanoCenterGold.Controllers
             return View(usuarios); ;
         }
 
+        public async Task<IActionResult> ListaUsuarios()
+        {
+
+            List<string> idsUsuario = _context.UserRoles.Where(a => a.RoleId == "2").Select(b => b.UserId).Distinct().ToList();
+            List<string> idsEntrenador = _context.UserRoles.Where(a => a.RoleId == "1").Select(b => b.UserId).Distinct().ToList();
+
+            List<Usuario> listUsers = _context.Users.Where(a => idsUsuario.Any(c => c == a.Id)).ToList();
+            List<Usuario> listEntrenadores = _context.Users.Where(a => idsEntrenador.Any(c => c == a.Id)).ToList();
+
+            ViewData["Gimnasios"] = _context.Gimnasio.ToList();
+
+            var model = new UsuariosConRoles()
+            {
+                Entrenadores = listEntrenadores,
+                Usuarios = listUsers,
+            };
+            return View(model); ;
+        }
+
 
         public IActionResult Privacy()
         {
@@ -184,5 +203,6 @@ namespace SanoCenterGold.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

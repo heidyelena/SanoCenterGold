@@ -29,5 +29,6 @@ namespace SanoCenterGold.Models
         public List<Reto> RetosPropuestos { get; set; }
         
         public int RetosCompletados { get; set; }
+
     }
 }
