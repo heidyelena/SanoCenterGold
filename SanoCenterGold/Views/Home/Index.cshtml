@@ -6,7 +6,11 @@
 
 <div class="text-center">
     <h1 class="display-4">BIENVENIDO A SANO CENTER</h1>
-    <p>Cualquier cosa que sea de ellos, no?</p>
+    <br/>
+    <br/>
+
+    
+    @*<p></p>*@
 </div>
 
 @if ((ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>) != null &&
@@ -87,10 +91,10 @@
             </div>
 
             @*<td>
-                <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
-                <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
-                <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
-            </td>*@
+                    <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
+                    <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
+                    <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
+                </td>*@
         </div>
     }
 }

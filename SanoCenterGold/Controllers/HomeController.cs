@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace SanoCenterGold.Controllers
             _userManager = userManager;
             _context = context;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             Usuario usuario = await _userManager.GetUserAsync(User);

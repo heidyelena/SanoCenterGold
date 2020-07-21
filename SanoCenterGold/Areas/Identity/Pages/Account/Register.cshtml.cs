@@ -152,6 +152,10 @@ namespace SanoCenterGold.Areas.Identity.Pages.Account
                     if (Input.Entrenador)
                     {
                        await _userManager.AddToRoleAsync(user, "Entrenador");
+                    } 
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Usuario");
                     }
                     _logger.LogInformation("User created a new account with password.");
 
