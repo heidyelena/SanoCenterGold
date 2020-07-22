@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg- #343333; border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-#343333 border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand mr-auto" href="#">
                     <img src="~/img/logo-para-puerta-de-arriba.png" width="360" height="80" class="d-inline-block align-top" alt="Logo" />
@@ -31,6 +31,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="RetoUsuarios" asp-action="Index">Mis Retos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="ComoRealizarlos">Explicación Ejercicios</a>
                         </li>
 
                         @if (User.IsInRole("usuario"))

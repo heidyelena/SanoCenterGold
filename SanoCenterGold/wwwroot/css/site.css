@@ -1,8 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-/*#FotosSano {
-    justify-content: space-between;
-}*/
+
+/*---------------------------------------------------------------CAMBIOS REALIZADOS JOSUNE*/
 body {
     background: #343333;
     color: white;
@@ -14,8 +13,21 @@ html {
 
 .clearfix {
     clear: both;
+    align-items: center;
 }
 
+h1 {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.neon {
+    color: #77bc1f;
+    margin-top: 10%;
+    text-shadow: 0 0 5px rgba(0,178,255,1), 0 0 10px #77bc1f, 0 0 20px rgba(0,2,255,1), 0 0 40px rgba(38,104,127,1), 0 0 80px rgba(38,104,127,1), 0 0 90px rgba(38,104,127,1), 0 0 100px rgba(38,104,127,1), 0 0 140px rgba(38,104,127,1), 0 0 180px rgba(38,104,127,1);
+}
+/*---------------------------------------------------------------CAMBIOS REALIZADOS JOSUNE*/
 
 a.navbar-brand {
     white-space: normal;
@@ -32,6 +44,7 @@ a {
     color: #fff;
     background-color: #77bc1f;
     border-color: #77bc1f;
+    margin-bottom: 10px;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
