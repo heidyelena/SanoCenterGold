@@ -29,27 +29,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="RetoUsuarios" asp-action="Index">Mis Retos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="ComoRealizarlos">Explicación Ejercicios</a>
-                        </li>
+
 
                         @if (User.IsInRole("usuario"))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="RetoUsuarios" asp-action="Index">Mis Retos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="ComoRealizarlos">Explicación Ejercicios</a>
                             </li>
                         }
 
 
                         @if (User.IsInRole("admin"))
                         {
-
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
                             </li>
@@ -63,6 +64,7 @@
                                     <li><a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="Index">Administrar Ejercicios</a></li>
                                     <li><a class="nav-link text-white" asp-area="" asp-controller="Retos" asp-action="Index">Administrar Retos</a></li>
                                     <li><a class="nav-link text-white" asp-area="" asp-controller="Gimnasios" asp-action="Index">Administrar Gimnasios</a></li>
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ListaUsuarios">Usuarios</a></li>
                                     <li><a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Registrar entrenador</a></li>
 
                                 </ul>
@@ -71,7 +73,9 @@
 
                         @if (User.IsInRole("entrenador"))
                         {
-
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
                             </li>

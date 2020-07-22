@@ -141,15 +141,43 @@ td {
     max-width: 100%;
     max-height: 100%;
     align-items: center;
-    margin-bottom:2%;
-    margin-top:2%;
+    margin-bottom: 2%;
+    margin-top: 2%;
 }
-.rankingtext{
-    text-align:center;
+
+.rankingtext {
+    text-align: center;
 }
+
 .frasesano {
     padding-top: 2%;
     max-width: 100%;
     max-height: 20%;
     text-align: -webkit-center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.card {
+    border: 2px dashed #000000;
+    border-radius: 3%;
+    margin: 2%;
+}
+
+    .card cartaReto {
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+        margin: 50%;
+        background: #343333;
+    }
+
+.FotoRetos {
+    align-content: center;
+    max-width: 300px;
+    max-height: 500px;
+    padding: 10%;
+    padding-right: %;
 }

@@ -25,8 +25,23 @@ namespace SanoCenterGold.Controllers
 
         // GET: Retos
         public async Task<IActionResult> Index()
-        {            
-            return View(await _context.Reto.Include(r => r.Entrenador).ToListAsync());
+        {
+            var retos = new List<Reto>();
+            if (User.IsInRole("admin"))
+            {
+                retos = await _context.Reto
+                    .Include(r => r.Entrenador)
+                    .ToListAsync();
+            } 
+            else if (User.IsInRole("entrenador"))
+            {
+                var entrenador = await _userManager.GetUserAsync(User);
+                retos = await _context.Reto
+                .Where(r => r.IdEntrenador == entrenador.IdUsuario)
+                .Include(r => r.Entrenador).ToListAsync();
+            }
+            
+            return View(retos);
         }
 
         // GET: Retos/Details/5
@@ -41,14 +56,20 @@ namespace SanoCenterGold.Controllers
                 .Include(r => r.Ejercicios)
                     .ThenInclude(r => r.Ejercicio)
                 .Include(r => r.Entrenador)
+                .Include(r => r.Usuarios)
+                    .ThenInclude(r => r.Usuario)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["Valoraciones"] = _context.Valoracion.ToList();
 
             if (reto == null)
             {
                 return NotFound();
             }
-
+            
             return View(reto);
+
+
         }
 
         // GET: Retos/Create
@@ -73,10 +94,11 @@ namespace SanoCenterGold.Controllers
 
                 for (int i = 0; i < ejercicios.Length; i++)
                 {
-                    ejerciciosLista.Add(new RetoEjercicio(){
+                    ejerciciosLista.Add(new RetoEjercicio()
+                    {
                         Ejercicio = await _context.Ejercicio.FindAsync(Convert.ToInt32(ejercicios[i])),
                         Reto = reto
-                    });                    
+                    });
                 }
 
                 reto.Ejercicios = ejerciciosLista;

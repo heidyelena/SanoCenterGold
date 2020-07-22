@@ -74,11 +74,11 @@ namespace SanoCenterGold.Controllers
 
                 ViewData["RetosGeneral"] = _context.Reto
                     .Include(r => r.Valoraciones)
-                    .Include(r => r.Ejercicios)                    
+                    .Include(r => r.Ejercicios)
                     .ThenInclude(r => r.Ejercicio)
-                    .Where(r => r.Usuarios.All(u => u.IdUsuario != usuario.IdUsuario) 
-                    || r.Usuarios.Any(u => u.IdUsuario == usuario.IdUsuario && 
-                        (u.EstadoDelReto == Enum.EstadoRetoEnum.Abandonado 
+                    .Where(r => r.Usuarios.All(u => u.IdUsuario != usuario.IdUsuario)
+                    || r.Usuarios.Any(u => u.IdUsuario == usuario.IdUsuario &&
+                        (u.EstadoDelReto == Enum.EstadoRetoEnum.Abandonado
                             || u.EstadoDelReto == Enum.EstadoRetoEnum.SinApuntar)))
                     .ToList();
             }
@@ -168,11 +168,24 @@ namespace SanoCenterGold.Controllers
         {
             var usuarios = await _userManager.Users.ToListAsync();
 
-            ViewData["Gimnasios"] = _context.Gimnasio.ToList(); 
+            ViewData["Gimnasios"] = _context.Gimnasio.ToList();
 
             return View(usuarios); ;
         }
-
+        public async Task<IActionResult> ListaUsuarios()
+        {
+            List<string> idsUsuario = _context.UserRoles.Where(a => a.RoleId == "2").Select(b => b.UserId).Distinct().ToList();
+            List<string> idsEntrenador = _context.UserRoles.Where(a => a.RoleId == "1").Select(b => b.UserId).Distinct().ToList();
+            List<Usuario> listUsers = _context.Users.Where(a => idsUsuario.Any(c => c == a.Id)).ToList();
+            List<Usuario> listEntrenadores = _context.Users.Where(a => idsEntrenador.Any(c => c == a.Id)).ToList();
+            ViewData["Gimnasios"] = _context.Gimnasio.ToList();
+            var model = new UsuariosConRoles()
+            {
+                Entrenadores = listEntrenadores,
+                Usuarios = listUsers,
+            };
+            return View(model); ;
+        }
 
         public IActionResult Privacy()
         {

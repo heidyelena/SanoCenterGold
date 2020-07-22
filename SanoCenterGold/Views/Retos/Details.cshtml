@@ -35,6 +35,36 @@
             @String.Concat(Model.Entrenador.Nombre, " ", Model.Entrenador.Apellidos)
         </dd>
         <dt class="col-sm-2">
+            Usuarios
+        </dt>
+        <dd class="col-sm-10">
+            <table>
+                <trow>
+                    <thead>Nombre</thead>
+                    <thead>Apellido</thead>
+                    <thead>Estado</thead>
+                    <thead>Valoración</thead>
+                </trow>
+                @foreach (var item in Model.Usuarios)
+                {
+                    <tr>
+                        <td>
+                            @item.Usuario.Nombre
+                        </td>
+                        <td>
+                            @item.Usuario.Apellidos
+                        </td>
+                        <td>
+                            @item.EstadoDelReto.ToString()
+                        </td>
+                        <td>
+                            @((ViewData["Valoraciones"] as List<Valoracion>).Where(v => v.IdReto == item.IdReto && v.IdUsuario == item.IdUsuario).Select(v => v.Puntuacion).FirstOrDefault().ToString())
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ejercicios)
         </dt>
         <dd class="col-sm-10">
@@ -63,7 +93,6 @@
                 }
             </table>
 
-            @*@Html.DisplayFor(model => model.Ejercicios.Select(x => x.Ejercicio.Nombre).FirstOrDefault())*@
 
         </dd>
     </dl>
@@ -72,3 +101,12 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
     <a asp-action="Index">Volver</a>
 </div>
+
+
+
+
+
+
+
+
+
