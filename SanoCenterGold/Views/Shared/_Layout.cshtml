@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-#343333 border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand mr-auto" href="#">
                     <img src="~/img/logo-para-puerta-de-arriba.png" width="360" height="80" class="d-inline-block align-top" alt="Logo" />
@@ -27,30 +27,27 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RetoUsuarios" asp-action="Index">Mis Retos</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="RetoUsuarios" asp-action="Index">Mis Retos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="ComoRealizarlos">Explicación Ejercicios</a>
                         </li>
 
 
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
                             </li>
-                           
-                            @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ejercicios" asp-action="Index">Ejercicios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Retos" asp-action="Index">Retos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Gimnasios" asp-action="Index">Gimnasios</a>
-                                </li>*@
+                          
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
                             </li>
 
                             <div class="dropdown">
@@ -58,11 +55,11 @@
                                     Administrador
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Ejercicios" asp-action="Index">Administrar Ejercicios</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Retos" asp-action="Index">Administrar Retos</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Gimnasios" asp-action="Index">Administrar Gimnasios</a></li>
-                                    <li><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrar entrenador</a></li>
+                                <ul class="dropdown-menu" style="background-color:#343333">
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="Index">Administrar Ejercicios</a></li>
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Retos" asp-action="Index">Administrar Retos</a></li>
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Gimnasios" asp-action="Index">Administrar Gimnasios</a></li>
+                                    <li><a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Registrar entrenador</a></li>
 
                                 </ul>
                             </div>
@@ -70,22 +67,21 @@
 
                         @if (User.IsInRole("entrenador"))
                         {
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Retos Disponibles</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
                             </li>
-                          
-                            @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ejercicios" asp-action="Index">Ejercicios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Retos" asp-action="Index">Retos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Gimnasios" asp-action="Index">Gimnasios</a>
-                                </li>*@
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
-                            </li>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Entrenador
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" style="background-color:#343333">
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Ejercicios" asp-action="Index">Administrar Ejercicios</a></li>
+                                    <li><a class="nav-link text-white" asp-area="" asp-controller="Retos" asp-action="Index">Administrar Retos</a></li>
+
+                                </ul>
+                            </div>
                         }
 
 
@@ -103,7 +99,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - SanoCenterGold - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - SanoCenterGold - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="color:white">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
