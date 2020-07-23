@@ -6,11 +6,15 @@
 
 <h1>Ejercicio</h1>
 
+
 <p>
     <a asp-action="Create">Crear Ejercicio</a>
 </p>
-<table class="table">
-    <thead>
+
+
+<table class="table col-sm-auto">
+
+    <thead style="text-align:start">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -19,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Dificultad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Repeticiones)
+                Repeat
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Series)
@@ -27,10 +31,13 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+
+    <tbody style="text-align:start">
+
         @foreach (var item in Model)
         {
             <tr>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
@@ -48,7 +55,13 @@
                     <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
+
             </tr>
         }
     </tbody>
 </table>
+
+
+
+
+

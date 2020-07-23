@@ -12,8 +12,6 @@ namespace SanoCenterGold.Models
         public int IdRetoEjercicio { get; set; }
         public int IdReto { get; set; }
         public Reto Reto { get; set; }
-
-
         public int IdEjercicio { get; set; }
         public Ejercicio Ejercicio { get; set; }
     }

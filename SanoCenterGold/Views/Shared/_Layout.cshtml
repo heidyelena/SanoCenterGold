@@ -57,7 +57,7 @@
 
                             <div class="dropdown">
                                 <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Administrador
+                                    Admin
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" style="background-color:#343333">
@@ -81,7 +81,7 @@
                             </li>
                             <div class="dropdown">
                                 <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Entrenador
+                                    Couch
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" style="background-color:#343333">
@@ -105,10 +105,49 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - SanoCenter<a asp-area="" asp-controller="Home" asp-action="Privacy" style="color: white"></a>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="container">
+                    <div class="footer-share" style=" align-items: flex-end;display:flex;flex-direction: row;justify-content: space-around">
+                        &copy; 2020 - SanoCenter<a asp-area="" asp-controller="Home" asp-action="Privacy" style="color: white"></a>
+                        <div class="instagram menu-item menu-item-type-custom menu-item-object-custom menu-item-25 active">
+                            <a target="_blank" href="https://www.instagram.com/sano_center/">
+
+                                <img src="~/img/insta.png" style="max-height: 65px;" class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="facebook menu-item menu-item-type-custom menu-item-object-custom menu-item-21">
+                            <a target="_blank" href="https://www.facebook.com/sanocentral/">
+
+                                <img src="~/img/facebook.png" style="max-height: 65px;" class="img-fluid"/>
+                            </a>
+                        </div>
+                        <div class="youtube menu-item menu-item-type-custom menu-item-object-custom menu-item-23">
+                            <a target="_blank" href="https://www.youtube.com/channel/UC8jnvGSv8J9OHhX4IKM6V8w">
+
+                                <img src="~/img/youtube.png" style="max-height: 65px;" class="img-fluid"/>
+                            </a>
+                        </div>
+                        <div class="twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-22">
+                            <a target="_blank" href="https://twitter.com/sano_center">
+
+                                <img src="~/img/twitter.png" style="max-height: 65px;" class="img-fluid"/>
+                            </a>
+                        </div>
+                        <div class="linkedin menu-item menu-item-type-custom menu-item-object-custom menu-item-24">
+                            <a target="_blank" href="https://www.linkedin.com/company/sano-center/">
+
+                                <img src="~/img/linkedin.png" style="max-height: 65px;" class="img-fluid"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,68 +1,73 @@
 ﻿@model UsuariosConRoles
 @{
 }
+
 @if (Model != null)
 {
-    <table class="table table-striped table-dark">
-        <thead style="text-align:center">
-            <tr>
-                <td>
-                    Usuario
-                </td>
-                <td>
-                    Centro
-                </td>
-                <td>
-                    Localidad
-                </td>
-                <td>
-                    Rol
-                </td>
-            </tr>
-        </thead>
-        <tbody class="rankingtext">
-            @foreach (var user in Model.Entrenadores)
-            {
+
+    <div class="container-fluid">
+        <table class="table table-striped table-dark">
+            <thead style="text-align:center">
                 <tr>
-                    <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
                     <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
-                        .Where(x => x.Id == user.IdGimnasio)
-                        .Select(x => x.Nombre)
-                        .FirstOrDefault())
+                        Usuarios
                     </td>
                     <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
-                            .Where(x => x.Id == user.IdGimnasio)
-                            .Select(x => x.Localidad)
-                            .FirstOrDefault())
+                        Centros
                     </td>
                     <td>
-                        Entrenador
+                        Localidad
+                    </td>
+                    <td>
+                        Rol
                     </td>
                 </tr>
-            }
-            @foreach (var user in Model.Usuarios)
-            {
-                <tr>
-                    <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
-                    <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
-                        .Where(x => x.Id == user.IdGimnasio)
-                        .Select(x => x.Nombre)
-                        .FirstOrDefault())
-                    </td>
-                    <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+            </thead>
+            <tbody class="rankingtext">
+                @foreach (var user in Model.Entrenadores)
+                {
+                    <tr>
+                        <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
                             .Where(x => x.Id == user.IdGimnasio)
-                            .Select(x => x.Localidad)
+                            .Select(x => x.Nombre)
                             .FirstOrDefault())
-                    </td>
-                    <td>
-                        Usuario
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        </td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                                .Where(x => x.Id == user.IdGimnasio)
+                                .Select(x => x.Localidad)
+                                .FirstOrDefault())
+                        </td>
+                        <td>
+                            Entrenador
+                        </td>
+                    </tr>
+                }
+                @foreach (var user in Model.Usuarios)
+                {
+                    <tr>
+                        <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                            .Where(x => x.Id == user.IdGimnasio)
+                            .Select(x => x.Nombre)
+                            .FirstOrDefault())
+                        </td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                                .Where(x => x.Id == user.IdGimnasio)
+                                .Select(x => x.Localidad)
+                                .FirstOrDefault())
+                        </td>
+                        <td>
+                            Usuario
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 }

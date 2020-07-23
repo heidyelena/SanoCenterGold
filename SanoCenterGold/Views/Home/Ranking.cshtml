@@ -3,58 +3,65 @@
     ViewData["Title"] = "Index";
 }
 
+
 @if (Model != null && Model.Count() > 0)
 {
-
-    <table class="table table-striped table-dark">
-        <thead style="text-align:center">
-            <tr>
-                <td>
-                    Puesto
-                </td>
-                <td>
-                    Usuario
-                </td>
-                <td>
-                    Retos Completados
-                </td>
-                <td>
-                    Centro
-                </td>
-                <td>
-                    Localidad
-                </td>
-            </tr>
-        </thead>
-        <tbody class="rankingtext">
-            @{
-                var posicion = 1;
-            }
-            @foreach (var user in Model.OrderByDescending(m => m.RetosCompletados))
-            {
-
-
+    <div class="container-fluid">
+        <table class="table table-striped table-dark">
+            <thead style="text-align:center">
                 <tr>
-                    <td>@posicion</td>
-                    <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
-                    <td>@user.RetosCompletados</td>
                     <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
-                        .Where(x => x.Id == user.IdGimnasio)
-                        .Select(x => x.Nombre)
-                        .FirstOrDefault())
+                        Puesto
                     </td>
                     <td>
-                        @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
-                            .Where(x => x.Id == user.IdGimnasio)
-                            .Select(x => x.Localidad)
-                            .FirstOrDefault())
+                        Usuario
+                    </td>
+                    <td>
+                        Retos Completados
+                    </td>
+                    <td>
+                        Centro
+                    </td>
+                    <td>
+                        Localidad
                     </td>
                 </tr>
-                posicion = posicion + 1;
 
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody class="rankingtext">
+
+
+                @{
+                    var posicion = 1;
+                }
+
+                @foreach (var user in Model.OrderByDescending(m => m.RetosCompletados))
+                {
+
+
+                    <tr>
+                        <td>@posicion</td>
+                        <td>@string.Concat(user.Nombre, " ", user.Apellidos)</td>
+                        <td>@user.RetosCompletados</td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                            .Where(x => x.Id == user.IdGimnasio)
+                            .Select(x => x.Nombre)
+                            .FirstOrDefault())
+                        </td>
+                        <td>
+                            @((ViewData["Gimnasios"] as List<SanoCenterGold.Models.Gimnasio>)
+                                .Where(x => x.Id == user.IdGimnasio)
+                                .Select(x => x.Localidad)
+                                .FirstOrDefault())
+                        </td>
+                    </tr>
+                    posicion = posicion + 1;
+
+                }
+
+            </tbody>
+        </table>
+    </div>
 }
-

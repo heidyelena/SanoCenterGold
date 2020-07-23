@@ -3,116 +3,118 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="neon">¿ACEPTAS EL DESAFIO?</h1>
-</div>
-<br />
-<br />
-
-@if ((ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>) != null &&
-(ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>).Count > 0)
-{
-    <h2>MIS RETOS DISPONIBLES</h2>
-    <br />
-    <br />
-    <div class="card-columns" style="text-align:center; justify-content:space-between;">
-
-
-        @foreach (var reto in ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>)
-        {
-
-
-            <div class="card cartaReto col-lg-12" style="background:#343333;">
-                <strong>@reto.Nombre</strong>
-                @if (reto.Usuarios.Select(x => x.EstadoDelReto).FirstOrDefault() == SanoCenterGold.Enum.EstadoRetoEnum.Iniciado)
-                {
-                    @:<p>Has iniciado este reto!</p>
-                }
-                <ul>
-                    @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
-                    {
-
-                        <li>
-                            @ejercicio.Nombre: @ejercicio.Series series de @ejercicio.Repeticiones repeticiones
-                        </li>
-                    }
-
-                </ul>
-                @if (reto.Usuarios.Select(x => x.EstadoDelReto).FirstOrDefault() == SanoCenterGold.Enum.EstadoRetoEnum.Iniciado)
-                {
-                    <button class="btn-primary " id="@String.Concat("finalizar", @reto.Id)" onclick="location.href='@Url.Action("FinalizarReto", "Home", new { idReto = reto.Id })'">FINALIZAR</button>
-                }
-                else
-                {
-                    <button class="btn-primary " id="@String.Concat("iniciar", @reto.Id)" onclick="location.href='@Url.Action("IniciarReto", "Home", new { idReto = reto.Id })'">COMENZAR</button>
-                }
-
-                <button class="btn-danger " id="@String.Concat("abandonar", @reto.Id)" onclick="location.href='@Url.Action("Abandonar", "Home", new { idReto = reto.Id })'">ABANDONAR</button>
-            </div>
-
-
-        }
+<div class="container-fluid">
+    <div class="text-center">
+        <h1 class="neon">¿ACEPTAS EL DESAFIO?</h1>
     </div>
-
-}
-
-
-
-@if ((ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>) != null &&
-(ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>).Count > 0)
-{
-    <h2>RETOS DISPONIBLES</h2>
     <br />
     <br />
-    <div class="card-columns" style="text-align:center; justify-content:space-between;">
+
+    @if ((ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>) != null &&
+ (ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+    {
+
+        <br />
+        <br />
+        <div class="card-columns" style="text-align:center; justify-content:space-between;">
 
 
-        @foreach (var reto in ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>)
-        {
-            <div class="card cartaReto col-lg-12" style="background:#343333;">
-                <img class="FotoRetos" src="~/img/@reto.Imagen" alt="Foto del Reto" />
-                <div>
+            @foreach (var reto in ViewData["RetosDeUsuario"] as List<SanoCenterGold.Models.Reto>)
+            {
 
+
+                <div class="card cartaReto col-lg-12" style="background:#343333;">
+                    <img class="FotoRetos" src="~/img/@reto.Imagen" alt="Foto del Reto" />
                     <strong>@reto.Nombre</strong>
-                    @if ((ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).Count() > 0)
+                    @if (reto.Usuarios.Select(x => x.EstadoDelReto).FirstOrDefault() == SanoCenterGold.Enum.EstadoRetoEnum.Iniciado)
                     {
-                        var valoracion = (ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).FirstOrDefault();
-
-                        <p>
-                            @valoracion.Value
-                            <span class="fa fa-star checked"></span>
-                        </p>
-                    }
-                    else
-                    {
-                        @:<p>Sin Valorar</p>
+                        @:<p>Has iniciado este reto!</p>
                     }
                     <ul>
                         @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
                         {
 
-                            <li>
+                            <li style="font:10px;text-align:initial;">
                                 @ejercicio.Nombre: @ejercicio.Series series de @ejercicio.Repeticiones repeticiones
                             </li>
                         }
 
                     </ul>
-                    <div class="clearfix">
+                    @if (reto.Usuarios.Select(x => x.EstadoDelReto).FirstOrDefault() == SanoCenterGold.Enum.EstadoRetoEnum.Iniciado)
+                    {
+                        <button class="btn-primary " id="@String.Concat("finalizar", @reto.Id)" onclick="location.href='@Url.Action("FinalizarReto", "Home", new { idReto = reto.Id })'">FINALIZAR</button>
+                    }
+                    else
+                    {
+                        <button class="btn-primary " id="@String.Concat("iniciar", @reto.Id)" onclick="location.href='@Url.Action("IniciarReto", "Home", new { idReto = reto.Id })'">COMENZAR</button>
+                    }
 
-                        <button class="btn-primary " id="@String.Concat("apuntarse", @reto.Id)" onclick="location.href='@Url.Action("Apuntarse", "Home", new { idReto = reto.Id })'">APUNTARSE</button>
-                    </div>
-
-                    @*<td>
-                            <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
-                            <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
-                            <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
-                        </td>*@
-
+                    <button class="btn-danger " id="@String.Concat("abandonar", @reto.Id)" onclick="location.href='@Url.Action("Abandonar", "Home", new { idReto = reto.Id })'">ABANDONAR</button>
                 </div>
-            </div>
-        }
-    </div>
-}
 
 
+            }
+        </div>
+
+    }
+
+
+
+    @if ((ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>) != null &&
+ (ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>).Count > 0)
+    {
+
+        <br />
+        <br />
+        <div class="card-columns" style="text-align:center; justify-content:space-between;">
+
+
+            @foreach (var reto in ViewData["RetosGeneral"] as List<SanoCenterGold.Models.Reto>)
+            {
+                <div class="card cartaReto col-lg-12" style="background:#343333;">
+                    <img class="FotoRetos" src="~/img/@reto.Imagen" alt="Foto del Reto" />
+                    <div>
+
+                        <strong>@reto.Nombre</strong>
+                        @if ((ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).Count() > 0)
+                        {
+                            var valoracion = (ViewData["Valoraciones"] as List<KeyValuePair<int, float>>).Where(v => v.Key == reto.Id).FirstOrDefault();
+
+                            <p>
+                                @valoracion.Value
+                                <span class="fa fa-star checked"></span>
+                            </p>
+                        }
+                        else
+                        {
+                            @:<p>Sin Valorar</p>
+                        }
+                        <ul>
+                            @foreach (var ejercicio in reto.Ejercicios.Select(x => x.Ejercicio))
+                            {
+
+                                <li style="font:10px;text-align:initial;">
+                                    @ejercicio.Nombre: @ejercicio.Series series de @ejercicio.Repeticiones repeticiones
+                                </li>
+                            }
+
+                        </ul>
+                        <div class="clearfix">
+
+                            <button class="btn-primary " id="@String.Concat("apuntarse", @reto.Id)" onclick="location.href='@Url.Action("Apuntarse", "Home", new { idReto = reto.Id })'">APUNTARSE</button>
+                        </div>
+
+                        @*<td>
+                                <a asp-controller="Retos" asp-action="Edit" asp-route-id="@reto.Id">Editar</a> |
+                                <a asp-controller="Retos" asp-action="Details" asp-route-id="@reto.Id">Detalles</a> |
+                                <a asp-controller="Retos" asp-action="Delete" asp-route-id="@reto.Id">Eliminar</a>
+                            </td>*@
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    }
+
+</div>
